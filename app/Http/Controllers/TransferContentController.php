@@ -24,7 +24,7 @@ class TransferContentController extends Controller
         $accountData = BasicAccount::where('id', $id)->first();
         session()->forget('_transaction');
         return view('transferForm', [
-            'userAccount' => $accountData
+            'account' => $accountData
         ]);
     }
 

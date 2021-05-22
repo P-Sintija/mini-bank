@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\BasicAccountController;
 use App\Http\Controllers\CreateInvestmentAccountController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\InvestmentAccountController;
 use App\Http\Controllers\LogInController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\RegistrationController;
@@ -27,7 +28,7 @@ Route::get('/authenticationForm/{id}', [AuthenticationController::class, 'show']
 Route::post('/authenticateUser/{id}', [AuthenticationController::class, 'verification'])->name('authenticateUser.verification');
 Route::post('/refreshCode/{id}', [AuthenticationController::class, 'create'])->name('refreshCode.create');
 
-Route::get('/basicAccount/{id}', [BasicAccountController::class, 'show'])->name('basicAccount.show');//->middleware('twoFactorAuthentication:id');
+Route::get('/basicAccount/{id}', [BasicAccountController::class, 'index'])->name('basicAccount.index');//->middleware('twoFactorAuthentication:id');
 
 Route::get('/transactionForm/{id}', [TransferContentController::class, 'show'])->name('transactionForm.show');
 Route::post('/transactionInfo/{id}', [TransferContentController::class, 'inform'])->name('transactionInfo.inform');
@@ -36,13 +37,17 @@ Route::get('/transfer/{id}', [TransferController::class, 'execute'])->name('tran
 Route::get('/transferHistory/{id}', [TransferHistoryController::class, 'show'])->name('transferHistory.show');
 
 
+Route::get('/investmentAccountForm/{id}', [CreateInvestmentAccountController::class, 'show'])
+    ->name('investmentAccountForm.show');
 
+Route::post('/investmentAccountForm/{id}', [CreateInvestmentAccountController::class, 'store'])
+    ->name('investmentAccountForm.store');
 
+Route::get('/investmentAccount/{id}', [InvestmentAccountController::class, 'index'])
+    ->name('investmentAccount.index');
+Route::post('/deposit/{id}', [InvestmentAccountController::class, 'deposit'])
+    ->name('deposit.edit');
 
-Route::get('/investmentAccountForm/{id}', [CreateInvestmentAccountController::class, 'accountsForm'])
-    ->name('investmentAccountForm.accountsForm');
-Route::post('/investmentAccountForm/{id}', [CreateInvestmentAccountController::class, 'createAccount'])
-    ->name('investmentAccountForm.createAccount');
-
-
+Route::post('/withdrawal/{id}', [InvestmentAccountController::class, 'withdrawal'])
+    ->name('withdrawal.edit');
 

@@ -36,15 +36,18 @@ class RegistrationController extends Controller
     public function validation(RegistrationFormRequest $request): RedirectResponse
     {
         $this->emailVerificationService->sendVerification($request->all());
-        return redirect()->route('home.show')->withMessage('Please check your mail!');
+        return redirect()->route('home.show')
+            ->withMessage('Please check your mail!');
     }
 
     public function create(Request $request): RedirectResponse
     {
         if ($this->createBasicAccService->stored($request)) {
-            return redirect()->route('home.show')->withMessage('Registration was successful. Please log in!');
+            return redirect()->route('home.show')
+                ->withMessage('Registration was successful. Please log in!');
         };
-        return redirect()->route('home.show')->withMessage('Semething went wrong. Please try again!');
+        return redirect()->route('home.show')
+            ->withMessage('Something went wrong. Please try again!');
     }
 
 }

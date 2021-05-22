@@ -20,7 +20,8 @@ class BasicAccount extends Authenticatable
         'balance',
         'User_ID',
         'account_number',
-        'currency'
+        'currency',
+        'investment_account_id'
     ];
 
     public function removeBalance(int $amount): void

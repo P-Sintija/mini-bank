@@ -4,7 +4,8 @@ namespace App\Services\TransferServices;
 
 use App\Models\BasicAccount;
 use App\Models\TransferHistory;
-use App\Helpers\HistoryRequest;
+
+use App\Requests\HistoryRequest;
 use Illuminate\Support\Facades\DB;
 
 class HistoryService

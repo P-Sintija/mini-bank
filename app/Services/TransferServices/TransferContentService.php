@@ -2,11 +2,12 @@
 
 namespace App\Services\TransferServices;
 
-use App\Helpers\CurrencyRequest;
-use App\Helpers\TransferRequest;
+
 use App\Http\Requests\TransferFormRequest;
 use App\Models\BasicAccount;
 use App\Models\Currency;
+use App\Requests\CurrencyRequest;
+use App\Requests\TransferRequest;
 
 class TransferContentService
 {

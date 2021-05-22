@@ -3,7 +3,8 @@
 namespace App\Services\TransferServices;
 
 use App\Models\Currency;
-use App\Helpers\CurrencyRequest;
+use App\Requests\CurrencyRequest;
+
 
 class ExchangeCurrenciesService
 {

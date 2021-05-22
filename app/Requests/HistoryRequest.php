@@ -1,5 +1,5 @@
 <?php
-namespace App\Helpers;
+namespace App\Requests;
 
 use App\Models\BasicAccount;
 

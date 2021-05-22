@@ -33,7 +33,8 @@ class LogInController extends Controller
             $this->authenticationService->sendTwoFactorCode($user, 'authenticateUser.verification');
             return redirect()->route('authenticationForm.show', ['id' => $user->id]);
         };
-        return redirect()->route('home.show')->withErrors('password was incorrect!');
+        return redirect()->route('home.show')
+            ->withErrors('Password was incorrect!');
     }
 
 }

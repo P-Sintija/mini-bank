@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\TransferRequest;
+
 use App\Models\BasicAccount;
+use App\Requests\TransferRequest;
 use App\Services\AuthenticationServices\AuthenticationService;
 use App\Services\TransferServices\TransferService;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
+
 
 
 class TransferController
@@ -46,7 +47,7 @@ class TransferController
         );
 
         $this->transferService->execute($transfer);
-        return redirect()->route('basicAccount.show', ['id' => $id])->
-        withMessage('Transfer completed!');
+        return redirect()->route('basicAccount.index', ['id' => $id])
+            ->withMessage('Transfer completed!');
     }
 }

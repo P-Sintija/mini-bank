@@ -29,6 +29,10 @@ class TransferFormRequest extends FormRequest
 
     public function prepareForValidation(): void
     {
-        $this->request->set('amount', str_replace(',', '.', $this->amount) * 100);
+        $this->request->set('amount', str_replace(',', '.', $this->amount));
+
+        if (is_numeric($this->request->get('amount'))) {
+            $this->request->set('amount', $this->amount * 100);
+        }
     }
 }

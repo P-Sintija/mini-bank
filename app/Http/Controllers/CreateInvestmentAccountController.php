@@ -4,40 +4,35 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\InvestmentFormRequest;
 use App\Models\BasicAccount;
-use App\Services\InvestmentAccountsServices\CreateInvestmentAccountService;
-use App\Services\NewCostumerServices\GenerateAccountNumberService;
+use App\Services\InvestmentsAccountsServices\CreateInvestmentAccountService;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 
 
 class CreateInvestmentAccountController extends Controller
 {
-    private GenerateAccountNumberService $generateAccountNumberService;
     private CreateInvestmentAccountService $investmentAccountService;
 
-    public function __construct(
-        GenerateAccountNumberService $generateAccountNumberService,
-        CreateInvestmentAccountService $investmentAccountService
-    )
+    public function __construct(CreateInvestmentAccountService $investmentAccountService)
     {
-        $this->generateAccountNumberService = $generateAccountNumberService;
         $this->investmentAccountService = $investmentAccountService;
     }
 
-    public function accountsForm(int $id)
+    public function show(int $id): View
     {
         $user = BasicAccount::find($id);
-        $accountNumber = $this->generateAccountNumberService->getAccountNumber();
+        $accountNumber = $this->investmentAccountService->accountNumber();
         return view('investmentAccountForm', [
             'account' => $user,
             'investmentAccountNumber' => $accountNumber
         ]);
     }
 
-    public function createAccount(int $id, InvestmentFormRequest $request)
+    public function store(int $id, InvestmentFormRequest $request): RedirectResponse
     {
-        $request['amount'] = str_replace(',', '.', $request['amount']) * 100;
-        $request->validated();
         $user = BasicAccount::find($id);
-        $this->investmentAccountService->saveAccount($request, $user);
+        $this->investmentAccountService->execute($request, $user);
+        return redirect()->route('investmentAccount.index',['id' => $user->id]);
     }
 
 }
