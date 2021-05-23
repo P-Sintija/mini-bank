@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BasicAccount;
-use App\Services\TransferServices\HistoryService;
+use App\Services\TransferServices\BasicAccountTransferServices\HistoryService;
 use Illuminate\Contracts\View\View;
 
 class TransferHistoryController extends Controller
@@ -19,7 +19,7 @@ class TransferHistoryController extends Controller
     {
        $history = $this->historyService->getHistory($id);
        $account = BasicAccount::find($id);
-        return view('transferHistory', [
+        return view('transfers.transferHistory', [
             'history' => $history,
             'account' => $account
             ]);

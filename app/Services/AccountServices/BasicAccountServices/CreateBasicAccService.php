@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Services\NewCostumerServices;
-
+namespace App\Services\AccountServices\BasicAccountServices;
 
 use App\Models\BasicAccount;
 use App\Models\Currency;
 use App\Models\EmailVerification;
+use App\Services\AccountServices\GenerateAccountNumberService;
+use App\Services\AccountServices\GenerateUserIDService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 

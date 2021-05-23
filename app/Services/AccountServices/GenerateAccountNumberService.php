@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\NewCostumerServices;
+namespace App\Services\AccountServices;
 
 use App\Models\BasicAccount;
 

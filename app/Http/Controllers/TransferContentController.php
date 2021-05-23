@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TransferFormRequest;
 use App\Models\BasicAccount;
-use App\Services\TransferServices\TransferContentService;
+use App\Services\TransferServices\BasicAccountTransferServices\TransferContentService;
 use Illuminate\Contracts\View\View;
 
 
@@ -23,7 +23,7 @@ class TransferContentController extends Controller
     {
         $accountData = BasicAccount::where('id', $id)->first();
         session()->forget('_transaction');
-        return view('transferForm', [
+        return view('transfers.transferForm', [
             'account' => $accountData
         ]);
     }
@@ -42,7 +42,7 @@ class TransferContentController extends Controller
             ]
         ]);
 
-        return view('transferInformation', [
+        return view('transfers.transferInformation', [
             'userAccount' => $transferInfo->debitAccount(),
             'recipientsAccount' => $transferInfo->creditAccount(),
             'amount' => number_format($transferInfo->debit() / 100, 2),

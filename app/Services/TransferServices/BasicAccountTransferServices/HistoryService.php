@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Services\TransferServices;
+namespace App\Services\TransferServices\BasicAccountTransferServices;
 
 use App\Models\BasicAccount;
 use App\Models\TransferHistory;
-
 use App\Requests\HistoryRequest;
 use Illuminate\Support\Facades\DB;
 

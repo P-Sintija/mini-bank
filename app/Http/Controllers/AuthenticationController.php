@@ -21,7 +21,7 @@ class AuthenticationController extends Controller
 
     public function show(int $id): View
     {
-        return view('authenticationForm', ['id' => $id]);
+        return view('authentication.authenticationForm', ['id' => $id]);
     }
 
     public function verification(Request $request, int $id): RedirectResponse
@@ -37,7 +37,7 @@ class AuthenticationController extends Controller
     {
         $user = BasicAccount::find($id);
         $this->authenticationService->refreshCode($user);
-        return view('authenticationForm', ['id' => $id]);
+        return view('authentication.authenticationForm', ['id' => $id]);
     }
 
     private function userAuthentication(Request $request, BasicAccount $user): RedirectResponse

@@ -11,6 +11,6 @@ class BasicAccountController extends Controller
     public function index(int $id): View
     {
         $user = BasicAccount::find($id);
-        return view('basicAccount', ['account' => $user]);
+        return view('basic-account.basicAccount', ['account' => $user]);
     }
 }

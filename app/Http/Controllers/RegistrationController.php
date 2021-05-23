@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\RegistrationFormRequest;
 use App\Models\Currency;
-use App\Services\NewCostumerServices\CreateBasicAccService;
-use App\Services\NewCostumerServices\EmailVerificationService;
+use App\Services\AccountServices\BasicAccountServices\CreateBasicAccService;
+use App\Services\EmailVerificationServices\EmailVerificationService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -28,7 +28,7 @@ class RegistrationController extends Controller
     public function show(): View
     {
         $currencies = Currency::orderby('symbol', 'desc')->get();
-        return view('registrationForm', [
+        return view('basic-account.registrationForm', [
             'currencies' => $currencies->reverse()
         ]);
     }

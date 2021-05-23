@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\NewCostumerServices;
+namespace App\Services\EmailVerificationServices;
 
 use App\Mail\EmailVerificationMail;
 use App\Models\EmailVerification;

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Services\InvestmentsAccountsServices;
+namespace App\Services\AccountServices\InvestmentsAccountsServices;
 
 use App\Http\Requests\InvestmentFormRequest;
 use App\Models\BasicAccount;
 use App\Models\InvestmentAccount;
-use App\Services\NewCostumerServices\GenerateAccountNumberService;
+use App\Services\AccountServices\GenerateAccountNumberService;
 use App\Services\TransferServices\InvestmentAccountTransfers\InvestmentTransferService;
 
 

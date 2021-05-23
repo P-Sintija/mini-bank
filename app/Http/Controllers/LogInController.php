@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LogInRequest;
 use App\Models\BasicAccount;
-
 use App\Services\AuthenticationServices\AuthenticationService;
 use App\Services\AuthenticationServices\PasswordCheckService;
 use Illuminate\Http\RedirectResponse;

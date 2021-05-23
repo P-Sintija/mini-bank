@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\InvestmentFormRequest;
 use App\Models\BasicAccount;
-use App\Services\InvestmentsAccountsServices\CreateInvestmentAccountService;
+
+use App\Services\AccountServices\InvestmentsAccountsServices\CreateInvestmentAccountService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 
@@ -22,7 +23,7 @@ class CreateInvestmentAccountController extends Controller
     {
         $user = BasicAccount::find($id);
         $accountNumber = $this->investmentAccountService->accountNumber();
-        return view('investmentAccountForm', [
+        return view('investment-account.investmentAccountForm', [
             'account' => $user,
             'investmentAccountNumber' => $accountNumber
         ]);

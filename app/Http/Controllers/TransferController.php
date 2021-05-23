@@ -6,7 +6,7 @@ namespace App\Http\Controllers;
 use App\Models\BasicAccount;
 use App\Requests\TransferRequest;
 use App\Services\AuthenticationServices\AuthenticationService;
-use App\Services\TransferServices\TransferService;
+use App\Services\TransferServices\BasicAccountTransferServices\TransferService;
 use Illuminate\Http\RedirectResponse;
 
 
@@ -35,9 +35,8 @@ class TransferController
 
     public function execute(int $id): RedirectResponse
     {
-        // $transferData = $transaction = session()->pull('_transaction');
-
-        $transferData = $transaction = session()->get('_transaction');
+        // $transferData = session()->pull('_transaction');
+        $transferData = session()->get('_transaction');
 
         $transfer = new TransferRequest(
             BasicAccount::where('id', $transferData['user_id'])->first(),

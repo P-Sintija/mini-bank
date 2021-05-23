@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\TransferServices;
+namespace App\Services\TransferServices\BasicAccountTransferServices;
 
 
 use App\Http\Requests\TransferFormRequest;
@@ -8,6 +8,7 @@ use App\Models\BasicAccount;
 use App\Models\Currency;
 use App\Requests\CurrencyRequest;
 use App\Requests\TransferRequest;
+use App\Services\TransferServices\ExchangeCurrencyServices\ExchangeCurrenciesService;
 
 class TransferContentService
 {
