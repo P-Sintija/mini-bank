@@ -12,7 +12,6 @@
             <!-- Back Logout -->
             <div class="mt-auto flex items-center text-green-700 dark:text-green-400">
                 <form method="GET" action="{{ route('basicAccount.index',['id' => $userAccount->id]) }}">
-                    @csrf
                     <button type="submit" class="flex items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
                              viewBox="0 0 24 24" stroke="currentColor">
@@ -64,9 +63,10 @@
                             {{ $total }} {{ $recipientsAccount->currency }}
                         </span>
                                 @endif
-                                <form method="POST" action="{{ route('transfer.sendCode',['id' => $userAccount->id]) }}"
+                                <form method="POST" action="{{ route('sendCode.store',['id' => $userAccount->id]) }}"
                                       class="flex items-center justify-between mt-4">
                                     @csrf
+                                    @method('PUT')
                                     <button class="bg-green-700 hover:bg-green-500 text-white font-bold py-2
                             px-4 rounded focus:outline-none focus:shadow-outline"
                                             type="submit"> Transfer

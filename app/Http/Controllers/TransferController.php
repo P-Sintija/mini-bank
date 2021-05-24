@@ -25,10 +25,10 @@ class TransferController
         $this->transferService = $transferService;
     }
 
-    public function sendCode(int $id): RedirectResponse
+    public function store(int $id): RedirectResponse
     {
         $user = BasicAccount::find($id);
-        $this->authenticationService->sendTwoFactorCode($user, 'authenticateTransaction.verification');
+        $this->authenticationService->sendTwoFactorCode($user);
         return redirect()->route('authenticationForm.show', ['id' => $user->id]);
     }
 

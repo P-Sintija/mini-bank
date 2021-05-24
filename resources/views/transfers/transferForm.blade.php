@@ -12,7 +12,6 @@
             <!-- Back Logout -->
             <div class="mt-auto flex items-center text-green-700 dark:text-green-400">
                 <form method="GET" action="{{ route('basicAccount.index',['id' => $account->id]) }}">
-                    @csrf
                     <button type="submit" class="flex items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
                              viewBox="0 0 24 24" stroke="currentColor">
@@ -75,7 +74,7 @@
 				dark:bg-gray-600 shadow-xl rounded-lg cursor-pointer">
                     <div class=" flex flex-col items-center justify-center">
                         <form id="form" class="bg-white rounded-lg px-8 pt-6 pb-8 mb-4 "
-                              method="POST" action="{{ route('transactionInfo.inform',['id' => $account->id]) }}">
+                              method="POST" action="{{ route('transferInfo.inform',['id' => $account->id]) }}">
                             @csrf
                             <h1 class=" flex capitalize text-2xl text-gray-600 dark:text-gray-400">
                                 Transfer to another account

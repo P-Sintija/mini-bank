@@ -16,33 +16,26 @@ class AuthenticationService
         $this->twoFactorAuthService = $twoFactorAuthService;
     }
 
-    public function sendTwoFactorCode(BasicAccount $user, string $routName)
+    public function sendTwoFactorCode(BasicAccount $user): void
     {
         $twoFactorCode = $this->twoFactorAuthService->generateTwoFactorCode($user);
-        $user->notify(new AuthenticationNotification($twoFactorCode, $user->id, $routName));
+        $user->notify(new AuthenticationNotification($twoFactorCode, $user->id));
     }
 
     public function authenticated(Request $request, BasicAccount $user): bool
     {
-        if ($this->verify($request, $user)) {
-           // $this->twoFactorAuthService->deleteTwoFactorCode($user);
-            return true;
-        }
-        return false;
+        $twoFactorCode = DB::table('user_authentication')
+            ->where('id', $user->id)
+            ->first();
+        $this->twoFactorAuthService->deleteTwoFactorCode($user);
+        return $request['twoFactorCode'] == $twoFactorCode->two_factor_code &&
+            $twoFactorCode->two_factor_expires_at >= now();
     }
 
     public function refreshCode(BasicAccount $user): void
     {
         $this->twoFactorAuthService->deleteTwoFactorCode($user);
-        $this->twoFactorAuthService->generateTwoFactorCode($user);
+        $this->sendTwoFactorCode($user);
     }
 
-    private function verify(Request $request, BasicAccount $user): bool
-    {
-        $twoFactorCode = DB::table('user_authentication')
-            ->where('id', $user->id)
-            ->first();
-        return $request['twoFactorCode'] == $twoFactorCode->two_factor_code &&
-            $twoFactorCode->two_factor_expires_at >= now();
-    }
 }

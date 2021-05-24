@@ -22,57 +22,53 @@ Route::get('/', [HomeController::class, 'show'])
 Route::get('/registrationForm', [RegistrationController::class, 'show'])
     ->name('registrationForm.show');
 Route::post('/register', [RegistrationController::class, 'validation'])
-    ->name('register.validation');/// ?????!!!!???? /// post->store put/patch->update
+    ->name('register.validation');
 Route::get('/register',[RegistrationController::class,'create'])
     ->name('register.create');
 
 Route::post('/logIn', [LogInController::class, 'logIn'])
-    ->name('logIn.logIn');/// ?????!!!!???? /// post->store put/patch->update
+    ->name('logIn.logIn');
 Route::post('/logout', [LogoutController::class, 'execute'])
     ->name('logout.execute');
 
 Route::get('/authenticationForm/{id}', [AuthenticationController::class, 'show'])
     ->name('authenticationForm.show');
 Route::post('/authenticateUser/{id}', [AuthenticationController::class, 'verification'])
-    ->name('authenticateUser.verification'); /// ?????!!!!???? /// post->store put/patch->update
-Route::post('/refreshCode/{id}', [AuthenticationController::class, 'create'])
-    ->name('refreshCode.create'); /// ?????!!!!???? /// CREATE GET
-
-Route::get('/basicAccount/{id}', [BasicAccountController::class, 'index'])
-    ->name('basicAccount.index');//->middleware('twoFactorAuthentication:id');
-
-Route::get('/transactionForm/{id}', [TransferContentController::class, 'show'])
-    ->name('transactionForm.show');
-Route::post('/transactionInfo/{id}', [TransferContentController::class, 'inform'])
-    ->name('transactionInfo.inform'); /// ?????!!!!???? /// post->store put/patch->update
-Route::post('/transfer/{id}', [TransferController::class, 'sendCode'])
-    ->name('transfer.sendCode'); /// ?????!!!!???? /// post->store put/patch->update
-Route::get('/transfer/{id}', [TransferController::class, 'execute'])
-    ->name('transfer.execute');
-Route::get('/transferHistory/{id}', [TransferHistoryController::class, 'show'])
-    ->name('transferHistory.show');
+    ->name('authenticateUser.verification');
+Route::put('/refreshCode/{id}', [AuthenticationController::class, 'update'])
+    ->name('refreshCode.update');
 
 
-Route::get('/investmentAccountForm/{id}', [CreateInvestmentAccountController::class, 'show'])
-    ->name('investmentAccountForm.show');
+Route::middleware(['twoFactorAuthentication:id'])->group(function () {
+    Route::get('/basicAccount/{id}', [BasicAccountController::class, 'index'])
+        ->name('basicAccount.index');
 
-Route::post('/investmentAccountForm/{id}', [CreateInvestmentAccountController::class, 'store'])
-    ->name('investmentAccountForm.store');
+    Route::get('/transferForm/{id}', [TransferContentController::class, 'show'])
+        ->name('transferForm.show');
+    Route::post('/transferInfo/{id}', [TransferContentController::class, 'inform'])
+        ->name('transferInfo.inform');
+    Route::put('/sendCode/{id}', [TransferController::class, 'store'])
+        ->name('sendCode.store');
+    Route::get('/transfer/{id}', [TransferController::class, 'execute'])
+        ->name('transfer.execute');
+    Route::get('/transferHistory/{id}', [TransferHistoryController::class, 'show'])
+        ->name('transferHistory.show');
 
-Route::get('/investmentAccount/{id}', [InvestmentAccountController::class, 'index'])
-    ->name('investmentAccount.index');
-Route::post('/deposit/{id}', [InvestmentAccountController::class, 'deposit'])
-    ->name('deposit.edit'); /// ?????!!!!???? /// post->store put/patch->update
+    Route::get('/investmentAccountForm/{id}', [CreateInvestmentAccountController::class, 'show'])
+        ->name('investmentAccountForm.show');
+    Route::post('/investmentAccountForm/{id}', [CreateInvestmentAccountController::class, 'store'])
+        ->name('investmentAccountForm.store');
+    Route::get('/investmentAccount/{id}', [InvestmentAccountController::class, 'index'])
+        ->name('investmentAccount.index');
+    Route::put('/deposit/{id}', [InvestmentAccountController::class, 'deposit'])
+        ->name('deposit.edit');
+    Route::put('/withdrawal/{id}', [InvestmentAccountController::class, 'withdrawal'])
+        ->name('withdrawal.edit');
 
-Route::post('/withdrawal/{id}', [InvestmentAccountController::class, 'withdrawal'])
-    ->name('withdrawal.edit'); /// ?????!!!!???? /// post->store put/patch->update
-
-
-Route::get('/stock', [StockController::class,'index'])
-    ->name('stock.index');
-Route::post('/stock/buy', [StockController::class,'store'])
-    ->name('stock.store');
-Route::delete('/stock/sell/{id}', [StockController::class,'destroy'])
-    ->name('stock.sell');
-
-Route::get('/example',[\App\Http\Controllers\EXAMPLE::class, 'index']);
+    Route::get('/stock', [StockController::class,'index'])
+        ->name('stock.index');
+    Route::post('/stock/buy', [StockController::class,'store'])
+        ->name('stock.store');
+    Route::delete('/stock/sell/{id}', [StockController::class,'destroy'])
+        ->name('stock.sell');
+});

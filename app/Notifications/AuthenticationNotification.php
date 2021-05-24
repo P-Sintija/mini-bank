@@ -12,13 +12,13 @@ class AuthenticationNotification extends Notification
 
     private int $twoFactorCode;
     private int $userId;
-    private string $authentication;
 
-    public function __construct(int $twoFactorCode, int $userId, string $authentication)
+
+    public function __construct(int $twoFactorCode, int $userId)
     {
         $this->twoFactorCode = $twoFactorCode;
         $this->userId = $userId;
-        $this->authentication = $authentication;
+
     }
 
 
@@ -33,7 +33,7 @@ class AuthenticationNotification extends Notification
         return (new MailMessage)
                     ->line('The introduction to the notification.')
                     ->line('Your code is: '. $this->twoFactorCode)
-                    ->line('authentication' . $this->authentication)
+
                     ->action('Notification Action', route('authenticationForm.show', ['id' => $this->userId]))
                     ->line('Thank you for using our application!');
     }

@@ -12,7 +12,7 @@
             <!-- Links -->
             <ul class="mt-2 text-green-600">
                 <li class="mt-8 ">
-                    <a href="{{ route('transactionForm.show',['id' => $account->id]) }}" class="flex ">
+                    <a href="{{ route('transferForm.show',['id' => $account->id]) }}" class="flex ">
                     <span class="ml-2 capitalize font-medium dark:text-green-300">
 						Transfer
 					</span>
@@ -133,7 +133,7 @@
                                 <span>Account number</span>
                                 <span>Balance</span>
                             </div>
-                            <div class="ml-12 mt-2 flex flex-col capitalize text-black dark:text-gray-200">
+                            <div class="ml-12 mt-2 flex flex-col text-black dark:text-gray-200">
                                 <span>{{ $account->account_number }}</span>
                                 <span>
 							{{ number_format($account->balance / 100 , 2) }} {{ $account->currency }}

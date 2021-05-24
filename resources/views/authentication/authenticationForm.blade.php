@@ -68,8 +68,9 @@
                             </div>
                         </form>
                         <form class="bg-white px-8 pb-8 mb-4" method="POST"
-                              action="{{ route('refreshCode.create',['id' => $id]) }}">
+                              action="{{ route('refreshCode.update',['id' => $id]) }}">
                             @csrf
+                            @method('PUT')
                             <div class="flex items-center justify-between mt-4">
                                 <button class="bg-white border hover:bg-green-500 text-green-700 hover:text-white
                                     font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"

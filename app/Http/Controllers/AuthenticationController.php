@@ -33,7 +33,7 @@ class AuthenticationController extends Controller
         return $this->transferAuthentication($request, $user);
     }
 
-    public function create(int $id): View
+    public function update(int $id): View
     {
         $user = BasicAccount::find($id);
         $this->authenticationService->refreshCode($user);

@@ -10,7 +10,7 @@ class AddInvestmentAccountIdToBasicAccountsTable extends Migration
     public function up(): void
     {
         Schema::table('basic_accounts', function (Blueprint $table) {
-            $table->integer('investment_account_id');
+            $table->integer('investment_account_id')->nullable();
         });
     }
 

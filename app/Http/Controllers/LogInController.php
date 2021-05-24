@@ -29,7 +29,7 @@ class LogInController extends Controller
         $user = BasicAccount::where('User_ID', $request['userId'])->first();
         if ($this->passwordCheckService->validate($user, $request->request->get('password'))) {
             session()->put('_authentication', 'user');
-            $this->authenticationService->sendTwoFactorCode($user, 'authenticateUser.verification');
+            $this->authenticationService->sendTwoFactorCode($user);
             return redirect()->route('authenticationForm.show', ['id' => $user->id]);
         };
         return redirect()->route('home.show')

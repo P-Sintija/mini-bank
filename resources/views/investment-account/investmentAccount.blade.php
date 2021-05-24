@@ -11,7 +11,6 @@
             <!-- Back Logout -->
             <div class="mt-auto flex items-center text-green-700 dark:text-green-400">
                 <form method="GET" action="{{ route('basicAccount.index',['id' => $account->basic_account_id]) }}">
-                    @csrf
                     <button type="submit" class="flex items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
                              viewBox="0 0 24 24" stroke="currentColor">
@@ -107,10 +106,10 @@
                                 <span>Account number</span>
                                 <span>Investment balance</span>
                                 <span>Actual balance</span>
-                                <form method="POST"
-                                      action="{{ route('deposit.edit',['id' => $account->basic_account_id]) }}"
+                                <form method="POST" action="{{ route('deposit.edit',['id' => $account->basic_account_id]) }}"
                                       class="flex items-center justify-between mt-4">
                                     @csrf
+                                    @method('PUT')
                                     <input class=" mt-3 shadow appearance-none border rounded w-full py-2
                                 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                            name="amount" id="amount" type="text" placeholder="Amount">
@@ -121,10 +120,10 @@
                                     </button>
                                 </form>
 
-                                <form method="POST"
-                                      action="{{ route('withdrawal.edit',['id' => $account->basic_account_id]) }}"
+                                <form method="POST" action="{{ route('withdrawal.edit',['id' => $account->basic_account_id]) }}"
                                       class="flex items-center justify-between mt-4">
                                     @csrf
+                                    @method('PUT')
                                     <input class=" mt-3 shadow appearance-none border rounded w-full py-2
                                 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                            name="amount" id="amount" type="text" placeholder="Amount">
@@ -161,7 +160,6 @@
                             <div class="ml-4 mt-2 flex flex-col capitalize text-gray-600 dark:text-gray-400">
                                 <form method="GET" action="{{ route('stock.index') }}"
                                       class="flex items-center justify-between mt-4">
-                                    @csrf
                                     <div class="mb-4">
                                         <label class="block text-gray-700 text-sm font-bold mb-2" for="symbol">
                                             Symbol
@@ -258,7 +256,7 @@
                                                 <button
                                                     class="bg-green-200 text-green-600 py-1 px-3 rounded-full text-xs"
                                                     type="submit" name="investmentAccountId" value="{{ $account->id }}">
-                                                    Completed
+                                                    Sell all
                                                 </button>
                                             </form>
                                         </div>
