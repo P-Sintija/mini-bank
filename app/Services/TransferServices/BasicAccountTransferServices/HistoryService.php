@@ -5,10 +5,12 @@ namespace App\Services\TransferServices\BasicAccountTransferServices;
 use App\Models\BasicAccount;
 use App\Models\TransferHistory;
 use App\Requests\HistoryRequest;
-use Illuminate\Support\Facades\DB;
 
 class HistoryService
 {
+    const OUTGOING = 'outgoing';
+    const INCOMING = 'incoming';
+
     public function saveHistory(HistoryRequest $debit, HistoryRequest $credit): void
     {
         $historyData = [
@@ -28,12 +30,12 @@ class HistoryService
 
     public function getHistory(int $id): array
     {
-        $historyData = DB::table('transfer_histories')
-            ->where('debit_id', $id)
-            ->orWhere('credit_id', $id)
-            ->orderBy('created_at', 'desc')
-            ->get()
-            ->toArray();
+        $outgoing = BasicAccount::find($id)->outgoingTransfers->toArray();
+        $incoming = BasicAccount::find($id)->incomingTransfers->toArray();
+        $historyData = array_merge($outgoing, $incoming);
+        usort($historyData, function ($transferOne, $transferTwo) {
+            return $transferTwo['created_at'] <=> $transferOne['created_at'];
+        });
 
         return $this->historyTable($historyData, $id);
     }
@@ -41,33 +43,25 @@ class HistoryService
     private function historyTable(array $historyData, int $id): array
     {
         $history = [];
-
         foreach ($historyData as $data) {
-            if ($data->debit_id == $id) {
-                $user = BasicAccount::where('id', $data->debit_id)->first();
-                $recipient = BasicAccount::where('id', $data->credit_id)->first();
-                $history[] = [
-                    'name' => $recipient->name,
-                    'surname' => $recipient->surname,
-                    'accountNumber' => $recipient->account_number,
-                    'amount' => $data->debit_amount,
-                    'currency' => $user->currency,
-                    'date' => $data->created_at,
-                    'transactionType' => 'outgoing'
-                ];
+            if ($data['debit_id'] == $id) {
+                $other = BasicAccount::find($data['credit_id']);
+                $amount = $data['debit_amount'];
+                $transactionType = self::OUTGOING;
             } else {
-                $user = BasicAccount::where('id', $data->credit_id)->first();
-                $provider = BasicAccount::where('id', $data->debit_id)->first();
-                $history[] = [
-                    'name' => $provider->name,
-                    'surname' => $provider->surname,
-                    'accountNumber' => $provider->account_number,
-                    'amount' => $data->credit_amount,
-                    'currency' => $user->currency,
-                    'date' => $data->created_at,
-                    'transactionType' => 'incoming'
-                ];
+                $other = BasicAccount::find($data['debit_id']);
+                $amount = $data['credit_amount'];
+                $transactionType = self::INCOMING;
             }
+            $history[] = [
+                'name' => $other->name,
+                'surname' => $other->surname,
+                'accountNumber' => $other->account_number,
+                'amount' => $amount,
+                'currency' => $other->currency,
+                'date' => $data['created_at'],
+                'transactionType' => $transactionType
+            ];
         }
         return $history;
     }

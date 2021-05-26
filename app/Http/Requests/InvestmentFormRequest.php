@@ -7,13 +7,6 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class InvestmentFormRequest extends FormRequest
 {
-
-//    public function authorize()
-//    {
-//        return false;
-//    }
-
-
     public function rules(): array
     {
         $user = BasicAccount::find($this->route('id'));

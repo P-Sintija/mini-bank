@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class InvestmentAccount extends Model
 {
@@ -35,5 +36,10 @@ class InvestmentAccount extends Model
             $this->investment_amount = 0;
         }
         $this->save();
+    }
+
+    public function stocks(): HasMany
+    {
+        return $this->hasMany(Stock::class);
     }
 }

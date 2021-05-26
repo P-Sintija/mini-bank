@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\BasicAccount;
-
 use App\Services\AuthenticationServices\AuthenticationService;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
@@ -26,36 +24,34 @@ class AuthenticationController extends Controller
 
     public function verification(Request $request, int $id): RedirectResponse
     {
-        $user = BasicAccount::find($id);
         if (session()->pull('_authentication') === 'user') {
-            return $this->userAuthentication($request, $user);
+            return $this->userAuthentication($request, $id);
         }
-        return $this->transferAuthentication($request, $user);
+        return $this->transferAuthentication($request, $id);
     }
 
     public function update(int $id): View
     {
-        $user = BasicAccount::find($id);
-        $this->authenticationService->refreshCode($user);
+        $this->authenticationService->refreshCode($id);
         return view('authentication.authenticationForm', ['id' => $id]);
     }
 
-    private function userAuthentication(Request $request, BasicAccount $user): RedirectResponse
+    private function userAuthentication(Request $request, int $id): RedirectResponse
     {
-        if ($this->authenticationService->authenticated($request, $user)) {
-            Auth::loginUsingId($user->id);
-            return redirect()->route('basicAccount.index', ['id' => $user->id]);
+        if ($this->authenticationService->authenticated($request, $id)) {
+            Auth::loginUsingId($id);
+            return redirect()->route('basicAccount.index', ['id' => $id]);
         }
         return redirect()->route('home.show')
             ->withMessage('Two factor code expired. Please try again!');
     }
 
-    private function transferAuthentication(Request $request, BasicAccount $user): RedirectResponse
+    private function transferAuthentication(Request $request, int $id): RedirectResponse
     {
-        if ($this->authenticationService->authenticated($request, $user)) {
-            return redirect()->route('transfer.execute', ['id' => $user->id]);
+        if ($this->authenticationService->authenticated($request, $id)) {
+            return redirect()->route('transfer.execute', ['id' => $id]);
         }
-        return redirect()->route('transactionForm.show', ['id' => $user->id])
+        return redirect()->route('transactionForm.show', ['id' => $id])
             ->withErrors('Authentication code expired. Please try again!');
     }
 

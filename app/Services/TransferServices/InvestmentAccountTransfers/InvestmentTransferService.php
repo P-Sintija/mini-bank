@@ -2,21 +2,30 @@
 
 namespace App\Services\TransferServices\InvestmentAccountTransfers;
 
+
+use App\Http\Requests\InvestmentWithdrawalRequest;
 use App\Models\BasicAccount;
-use App\Models\InvestmentAccount;
+
 
 class InvestmentTransferService
 {
     const DUTY = 0.20;
 
-    public function deposit(BasicAccount $basicAccount, InvestmentAccount $investmentAccount, int $amount): void
+    public function deposit(int $id, int $amount): void
     {
+        $basicAccount = BasicAccount::find($id);
+        $investmentAccount = $basicAccount->investmentAccount;
+
         $basicAccount->removeBalance($amount);
         $investmentAccount->addBalance($amount);
     }
 
-    public function withdrawal(BasicAccount $basicAccount, InvestmentAccount $investmentAccount, int $amount): void
+    public function withdrawal(int $id, InvestmentWithdrawalRequest $request): void
     {
+        $basicAccount = BasicAccount::find($id);
+        $investmentAccount = $basicAccount->investmentAccount;
+        $amount = $request['amount'];
+
         if ($amount > $investmentAccount->investment_amount) {
             $difference = $amount - $investmentAccount->investment_amount;
             $duty = $difference * self::DUTY;

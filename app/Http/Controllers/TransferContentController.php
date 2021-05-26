@@ -3,36 +3,37 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TransferFormRequest;
-use App\Models\BasicAccount;
+use App\Services\AccountServices\BasicAccountServices\BasicAccountService;
 use App\Services\TransferServices\BasicAccountTransferServices\TransferContentService;
 use Illuminate\Contracts\View\View;
 
 
 class TransferContentController extends Controller
 {
+    private BasicAccountService $basicAccountService;
     private TransferContentService $transferService;
 
     public function __construct(
+        BasicAccountService $basicAccountService,
         TransferContentService $transferService
     )
     {
+        $this->basicAccountService = $basicAccountService;
         $this->transferService = $transferService;
     }
 
     public function show(int $id): View
     {
-        $accountData = BasicAccount::where('id', $id)->first();
+        $user = $this->basicAccountService->handle($id);
         session()->forget('_transaction');
         return view('transfers.transferForm', [
-            'account' => $accountData
+            'account' => $user
         ]);
     }
 
     public function inform(int $id, TransferFormRequest $request): View
     {
-        $debitAccount = BasicAccount::where('id', $id)->first();
-        $transferInfo =  $transaction = $this->transferService->handle($debitAccount, $request);
-
+        $transferInfo = $this->transferService->handle($id, $request);
         session()->put([
             '_transaction' => [
                 'user_id' => $transferInfo->debitAccount()->id,

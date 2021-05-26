@@ -6,13 +6,6 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class StockFormRequest extends FormRequest
 {
-
-//    public function authorize()
-//    {
-//        return false;
-//    }
-
-
     public function rules(): array
     {
         return [

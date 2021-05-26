@@ -22,19 +22,18 @@ class AuthenticationNotification extends Notification
     }
 
 
-    public function via($notifiable)
+    public function via($notifiable): array
     {
         return ['mail'];
     }
 
 
-    public function toMail($notifiable)
+    public function toMail($notifiable): MailMessage
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->line('Your code is: '. $this->twoFactorCode)
-
-                    ->action('Notification Action', route('authenticationForm.show', ['id' => $this->userId]))
-                    ->line('Thank you for using our application!');
+            ->line('The introduction to the notification.')
+            ->line('Your code is: ' . $this->twoFactorCode)
+            ->action('Notification Action', route('authenticationForm.show', ['id' => $this->userId]))
+            ->line('Thank you for using our application!');
     }
 }

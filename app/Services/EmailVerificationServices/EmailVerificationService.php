@@ -9,15 +9,14 @@ use Illuminate\Support\Facades\Mail;
 class EmailVerificationService
 {
     const VERIFICATION_TIMEOUT = 10;
-    const VERIFICATION_ROUT = '/register/?email=';
+    const VERIFICATION_ROUTE = '/register/?email=';
 
     public function sendVerification(array $request): void
     {
-        $verifyUrl = $_SERVER['APP_URL'] . ':' . $_SERVER['SERVER_PORT'] . self::VERIFICATION_ROUT;
+        $verifyUrl = $_SERVER['APP_URL'] . ':' . $_SERVER['SERVER_PORT'] . self::VERIFICATION_ROUTE;
         $this->setTimeLimit($request);
         Mail::to($request['email'])->send(new EmailVerificationMail($verifyUrl, $request['email']));
     }
-
 
     private function setTimeLimit(array $request): void
     {

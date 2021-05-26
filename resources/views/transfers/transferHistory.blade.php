@@ -48,7 +48,7 @@
                             <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
                                 <th class="py-3 px-6 text-left">Name Surname</th>
                                 <th class="py-3 px-6 text-left">Account number</th>
-                                <th class="py-3 px-6 text-center">Amount</th>
+                                <th class="py-3 px-6 text-center">Amount ({{ $account->currency }})</th>
                                 <th class="py-3 px-6 text-center">Date</th>
                                 <th class="py-3 px-6 text-center">Type</th>
                             </tr>
@@ -75,7 +75,7 @@
                                         <td class="py-3 px-6 text-center">
                                             <div class="flex items-center justify-center">
                                             <span>
-                                                {{ number_format($transaction['amount'] / 100, 2) }} {{ $transaction['currency'] }}
+                                                {{ number_format($transaction['amount'] / 100, 2) }}
                                             </span>
                                             </div>
                                         </td>

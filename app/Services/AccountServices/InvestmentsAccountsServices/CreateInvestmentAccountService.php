@@ -29,8 +29,9 @@ class CreateInvestmentAccountService
     }
 
 
-    public function execute(InvestmentFormRequest $request, BasicAccount $user)
+    public function execute(InvestmentFormRequest $request, int $id): void
     {
+        $user = BasicAccount::find($id);
         $accountData = [
             'basic_account_id' => $user->id,
             'User_ID' => $user->User_ID,
@@ -46,7 +47,7 @@ class CreateInvestmentAccountService
         $account->save();
 
         $this->updateBasicAccount($user, $account);
-        $this->transferMoney($user, $account, $request->request->get('amount'));
+        $this->investmentTransferService->deposit($id, $request['amount']);
     }
 
     private function updateBasicAccount(BasicAccount $user, InvestmentAccount $account): void
@@ -56,10 +57,5 @@ class CreateInvestmentAccountService
                 ->pluck('id')
                 ->first()
         ]);
-    }
-
-    private function transferMoney(BasicAccount $basicAccount, InvestmentAccount $investmentAccount, int $amount): void
-    {
-        $this->investmentTransferService->deposit($basicAccount, $investmentAccount, $amount);
     }
 }

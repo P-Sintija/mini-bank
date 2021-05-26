@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Requests;
 
 use App\Models\BasicAccount;
@@ -7,6 +8,7 @@ class HistoryRequest
 {
     private BasicAccount $accountData;
     private int $amount;
+
     public function __construct(BasicAccount $accountData, int $amount)
     {
         $this->accountData = $accountData;

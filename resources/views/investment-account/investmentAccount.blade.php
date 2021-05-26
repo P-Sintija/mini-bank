@@ -158,7 +158,7 @@
                         </div>
                         <div class="flex flex-row">
                             <div class="ml-4 mt-2 flex flex-col capitalize text-gray-600 dark:text-gray-400">
-                                <form method="GET" action="{{ route('stock.index') }}"
+                                <form method="GET" action="{{ route('stock.index', ['id' => $account->basic_account_id]) }}"
                                       class="flex items-center justify-between mt-4">
                                     <div class="mb-4">
                                         <label class="block text-gray-700 text-sm font-bold mb-2" for="symbol">
@@ -191,7 +191,7 @@
                             {{ number_format(session()->get('_stockData')->costs() /100, 2) }} USD
                         </span>
                                     </div>
-                                    <form method="POST" action="{{ route('stock.store') }}">
+                                    <form method="POST" action="{{ route('stock.store', ['id' => $account->basic_account_id]) }}">
                                         @csrf
                                         <button class=" mt-3 ml-3 bg-green-700 hover:bg-green-500 text-white
                                      font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
@@ -250,12 +250,12 @@
                                     <td class="py-3 px-6 text-center">
                                         <div class="flex items-center justify-center">
                                             <form method="POST"
-                                                  action="{{ route('stock.sell',['id' => $stock->id ]) }}">
+                                                  action="{{ route('stock.sell',['id' => $account->basic_account_id ]) }}">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button
                                                     class="bg-green-200 text-green-600 py-1 px-3 rounded-full text-xs"
-                                                    type="submit" name="investmentAccountId" value="{{ $account->id }}">
+                                                    type="submit" name="stockId" value="{{ $stock->id }}">
                                                     Sell all
                                                 </button>
                                             </form>

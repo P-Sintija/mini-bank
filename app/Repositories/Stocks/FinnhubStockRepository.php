@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Services\StockServices;
+namespace App\Repositories\Stocks;
 
 use App\Http\Requests\StockFormRequest;
 use App\Requests\StockRequest;
 use Finnhub;
 use GuzzleHttp;
 
-class StockMarketService
+class FinnhubStockRepository implements StockRepository
 {
     const STOCK_CURRENT_PRICE = 'c';
     const API_KEY = 'c1n9rna37fkt0cimnp8g';

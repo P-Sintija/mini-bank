@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Requests;
 
 use App\Models\Currency;
@@ -7,6 +8,7 @@ class CurrencyRequest
 {
     private Currency $currency;
     private int $amount;
+
     public function __construct(Currency $currency, int $amount)
     {
         $this->currency = $currency;

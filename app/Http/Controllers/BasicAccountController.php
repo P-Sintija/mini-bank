@@ -2,15 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\BasicAccount;
+use App\Services\AccountServices\BasicAccountServices\BasicAccountService;
 use Illuminate\Contracts\View\View;
-
 
 class BasicAccountController extends Controller
 {
+    private BasicAccountService $basicAccountService;
+
+    public function __construct(BasicAccountService $basicAccountService)
+    {
+        $this->basicAccountService = $basicAccountService;
+    }
+
     public function index(int $id): View
     {
-        $user = BasicAccount::find($id);
+        $user = $this->basicAccountService->handle($id);
         return view('basic-account.basicAccount', ['account' => $user]);
     }
 }

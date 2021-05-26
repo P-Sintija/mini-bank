@@ -14,15 +14,14 @@ class TransferContentService
 {
     private ExchangeCurrenciesService $exchangeCurrenciesService;
 
-    public function __construct(
-        ExchangeCurrenciesService $exchangeCurrenciesService
-    )
+    public function __construct(ExchangeCurrenciesService $exchangeCurrenciesService)
     {
         $this->exchangeCurrenciesService = $exchangeCurrenciesService;
     }
 
-    public function handle(BasicAccount $debitAccount, TransferFormRequest $request): TransferRequest
+    public function handle(int $id, TransferFormRequest $request): TransferRequest
     {
+        $debitAccount = BasicAccount::find($id);
         $debit = $request->request->get('amount');
         $creditAccount= BasicAccount::where('account_number', $request->request->get('account_number'))->first();
         $debitCurrency = Currency::where('symbol', $debitAccount->currency)->first();

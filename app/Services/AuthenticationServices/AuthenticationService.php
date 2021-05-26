@@ -16,14 +16,16 @@ class AuthenticationService
         $this->twoFactorAuthService = $twoFactorAuthService;
     }
 
-    public function sendTwoFactorCode(BasicAccount $user): void
+    public function sendTwoFactorCode(int $id): void
     {
+        $user = BasicAccount::find($id);
         $twoFactorCode = $this->twoFactorAuthService->generateTwoFactorCode($user);
         $user->notify(new AuthenticationNotification($twoFactorCode, $user->id));
     }
 
-    public function authenticated(Request $request, BasicAccount $user): bool
+    public function authenticated(Request $request, int $id): bool
     {
+        $user = BasicAccount::find($id);
         $twoFactorCode = DB::table('user_authentication')
             ->where('id', $user->id)
             ->first();
@@ -32,10 +34,11 @@ class AuthenticationService
             $twoFactorCode->two_factor_expires_at >= now();
     }
 
-    public function refreshCode(BasicAccount $user): void
+    public function refreshCode(int $id): void
     {
+        $user = BasicAccount::find($id);
         $this->twoFactorAuthService->deleteTwoFactorCode($user);
-        $this->sendTwoFactorCode($user);
+        $this->sendTwoFactorCode($id);
     }
 
 }

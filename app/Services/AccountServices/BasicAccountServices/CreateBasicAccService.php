@@ -62,5 +62,4 @@ class CreateBasicAccService
         $account->save();
     }
 
-
 }

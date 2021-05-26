@@ -2,36 +2,35 @@
 
 namespace App\Services\TransferServices\TransactionServices;
 
+use App\Models\BasicAccount;
 use App\Models\Currency;
 use App\Models\InvestmentAccount;
 use App\Models\Stock;
 use App\Requests\CurrencyRequest;
 use App\Requests\StockRequest;
-use App\Services\StockServices\StockMarketService;
 use App\Services\StockServices\StockService;
 use App\Services\TransferServices\ExchangeCurrencyServices\ExchangeCurrenciesService;
+use Illuminate\Http\Request;
 
 
 class TransactionService
 {
     private StockService $stockService;
     private ExchangeCurrenciesService $exchangeCurrenciesService;
-    private StockMarketService $stockMarketService;
     const STOCK_MARKET_CURRENCY = 'USD';
 
     public function __construct(
         StockService $stockService,
-        ExchangeCurrenciesService $exchangeCurrenciesService,
-        StockMarketService $stockMarketService
+        ExchangeCurrenciesService $exchangeCurrenciesService
     )
     {
         $this->stockService = $stockService;
         $this->exchangeCurrenciesService = $exchangeCurrenciesService;
-        $this->stockMarketService = $stockMarketService;
     }
 
-    public function purchase(StockRequest $stock, InvestmentAccount $investmentAccount): bool
+    public function purchase(StockRequest $stock, int $id): bool
     {
+        $investmentAccount = BasicAccount::find($id)->investmentAccount;
         if ($investmentAccount->currency === self::STOCK_MARKET_CURRENCY) {
             $amount = $stock->costs();
         } else {
@@ -47,8 +46,10 @@ class TransactionService
     }
 
 
-    public function sale(Stock $stock, InvestmentAccount $investmentAccount): void
+    public function sale(int $id, Request $request): void
     {
+        $stock = Stock::find($request['stockId']);
+        $investmentAccount = BasicAccount::find($id)->investmentAccount;
         if ($investmentAccount->currency === self::STOCK_MARKET_CURRENCY) {
             $amount = $stock->costs;
         } else {

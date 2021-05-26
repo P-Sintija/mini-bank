@@ -23,7 +23,7 @@ Route::get('/registrationForm', [RegistrationController::class, 'show'])
     ->name('registrationForm.show');
 Route::post('/register', [RegistrationController::class, 'validation'])
     ->name('register.validation');
-Route::get('/register',[RegistrationController::class,'create'])
+Route::get('/register', [RegistrationController::class, 'create'])
     ->name('register.create');
 
 Route::post('/logIn', [LogInController::class, 'logIn'])
@@ -65,10 +65,10 @@ Route::middleware(['twoFactorAuthentication:id'])->group(function () {
     Route::put('/withdrawal/{id}', [InvestmentAccountController::class, 'withdrawal'])
         ->name('withdrawal.edit');
 
-    Route::get('/stock', [StockController::class,'index'])
+    Route::get('/stock/{id}', [StockController::class, 'index'])
         ->name('stock.index');
-    Route::post('/stock/buy', [StockController::class,'store'])
+    Route::post('/stock/buy/{id}', [StockController::class, 'store'])
         ->name('stock.store');
-    Route::delete('/stock/sell/{id}', [StockController::class,'destroy'])
+    Route::delete('/stock/sell/{id}', [StockController::class, 'destroy'])
         ->name('stock.sell');
 });

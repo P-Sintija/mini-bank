@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services\TransferServices\BasicAccountTransferServices;
 
 
@@ -16,7 +17,7 @@ class TransferService
 
     public function execute(TransferRequest $transfer): void
     {
-        $transfer->debitAccount()->removeBalance( $transfer->debit());
+        $transfer->debitAccount()->removeBalance($transfer->debit());
         $transfer->creditAccount()->addBalance($transfer->credit());
 
         $this->historyService->saveHistory(

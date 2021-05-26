@@ -27,9 +27,8 @@ class TransferController
 
     public function store(int $id): RedirectResponse
     {
-        $user = BasicAccount::find($id);
-        $this->authenticationService->sendTwoFactorCode($user);
-        return redirect()->route('authenticationForm.show', ['id' => $user->id]);
+        $this->authenticationService->sendTwoFactorCode($id);
+        return redirect()->route('authenticationForm.show', ['id' => $id]);
     }
 
 
