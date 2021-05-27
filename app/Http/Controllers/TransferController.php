@@ -34,8 +34,8 @@ class TransferController
 
     public function execute(int $id): RedirectResponse
     {
-        // $transferData = session()->pull('_transaction');
-        $transferData = session()->get('_transaction');
+         $transferData = session()->pull('_transaction');
+       // $transferData = session()->get('_transaction');
 
         $transfer = new TransferRequest(
             BasicAccount::where('id', $transferData['user_id'])->first(),

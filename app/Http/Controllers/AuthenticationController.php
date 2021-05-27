@@ -51,7 +51,7 @@ class AuthenticationController extends Controller
         if ($this->authenticationService->authenticated($request, $id)) {
             return redirect()->route('transfer.execute', ['id' => $id]);
         }
-        return redirect()->route('transactionForm.show', ['id' => $id])
+        return redirect()->route('transferForm.show', ['id' => $id])
             ->withErrors('Authentication code expired. Please try again!');
     }
 
